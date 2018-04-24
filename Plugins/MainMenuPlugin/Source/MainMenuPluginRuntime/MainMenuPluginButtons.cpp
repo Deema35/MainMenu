@@ -191,7 +191,7 @@ void FMainMenuPluginButtonCancel::Click()
 void FMainMenuPluginButtonCheckPointMode::Click()
 {
 
-	OwnedHUD->SetMainMenuMode(EMainMenuMode::CheckPointModeTune);
+	//OwnedHUD->SetMainMenuMode(EMainMenuMode::CheckPointModeTune);
 }
 
 //***********************************
