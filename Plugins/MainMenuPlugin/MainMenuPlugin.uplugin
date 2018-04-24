@@ -1,0 +1,24 @@
+{
+	"FileVersion" : 3,
+	"FriendlyName" : "MainMenuPlugin",
+	"Version" : 48,
+	"VersionName" : "1.0",
+	"CreatedBy" : "Deema 35",
+	"CreatedByURL" : " ",
+	"EngineVersion" : "",
+	"Description" : "Main menu for game",
+	"Category" : "Gamplay",
+	"EnabledByDefault" : true,
+	"MarketplaceURL" : " ",
+	
+	"Modules" :
+	[
+		{
+			"Name" : "MainMenuPluginRuntime",
+			"Type" : "Runtime",
+			"LoadingPhase" : "Default"
+		}
+	],
+
+	"CanContainContent" : true
+}
