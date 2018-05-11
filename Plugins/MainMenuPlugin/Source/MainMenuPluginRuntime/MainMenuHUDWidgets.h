@@ -4,7 +4,7 @@
 #include <vector>
 #include "MainMenuHUDWidgets.generated.h"
 
-class AMainMenuPluginHUD;
+class UMainMenuPluginHUDComponent;
 
 UCLASS(Blueprintable)
 class MAINMENUPLUGINRUNTIME_API UMainMenuRadarHUDWidget : public UUserWidget
@@ -45,6 +45,6 @@ private:
 
 	bool IsIniciate;
 
-	AMainMenuPluginHUD* HUD = nullptr;
+	UMainMenuPluginHUDComponent* HUDComponent = nullptr;
 };
 

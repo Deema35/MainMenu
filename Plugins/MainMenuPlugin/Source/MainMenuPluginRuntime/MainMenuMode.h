@@ -6,7 +6,7 @@
 #include "UObject/Class.h"  //For UENUM
 
 class FMainMenuModeBase;
-class AMainMenuPluginHUD;
+class UMainMenuPluginHUDComponent;
 class UUserWidget;
 
 UENUM(BlueprintType)
@@ -30,7 +30,7 @@ enum class EMainMenuMode : uint8
 class MAINMENUPLUGINRUNTIME_API FMainMenuModeFactory
 {
 public:
-	virtual std::shared_ptr<FMainMenuModeBase> Create(EMainMenuMode MenuMode, AMainMenuPluginHUD* OwnedHUD);
+	virtual std::shared_ptr<FMainMenuModeBase> Create(EMainMenuMode MenuMode, UMainMenuPluginHUDComponent* OwnedHUD);
 };
 
 
@@ -38,7 +38,7 @@ public:
 class MAINMENUPLUGINRUNTIME_API FMainMenuModeBase
 {
 public:
-	FMainMenuModeBase(AMainMenuPluginHUD* _OwnedHUD) : OwnedHUD(_OwnedHUD) {}
+	FMainMenuModeBase(UMainMenuPluginHUDComponent* _OwnedHUD) : OwnedHUD(_OwnedHUD) {}
 
 	virtual ~FMainMenuModeBase() {}
 
@@ -60,7 +60,7 @@ private:
 
 protected:
 
-	AMainMenuPluginHUD* OwnedHUD = nullptr;
+	UMainMenuPluginHUDComponent* OwnedHUD = nullptr;
 
 	std::vector<UUserWidget*> ModeWidgets;
 
@@ -73,7 +73,7 @@ protected:
 class MAINMENUPLUGINRUNTIME_API FMainMenuModeGame : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeGame(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeGame(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::Game; }
 
@@ -87,7 +87,7 @@ public:
 class FMainMenuModeMainMenu : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeMainMenu(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeMainMenu(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::MainMenu; }
 
@@ -101,7 +101,7 @@ public:
 class FMainMenuModeGameMenu : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeGameMenu(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeGameMenu(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::GameMenu; }
 
@@ -115,7 +115,7 @@ public:
 class FMainMenuModeSettings : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeSettings(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeSettings(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::Settings; }
 
@@ -129,7 +129,7 @@ public:
 class FMainMenuModeGameSettings : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeGameSettings(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeGameSettings(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::GameSettings; }
 
@@ -143,7 +143,7 @@ public:
 class FMainMenuModeMainMenuKeyBind : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeMainMenuKeyBind(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeMainMenuKeyBind(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::MainMenuKeyBing; }
 
@@ -157,7 +157,7 @@ public:
 class FMainMenuModeGameKeyBind : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeGameKeyBind(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeGameKeyBind(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::GameKeyBind; }
 
@@ -171,7 +171,7 @@ public:
 class FMainMenuModeTitlesMenu : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeTitlesMenu(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeTitlesMenu(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::TitlesMenu; }
 
@@ -186,7 +186,7 @@ public:
 class FMainMenuModeCheckPointModeTune : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeCheckPointModeTune(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeCheckPointModeTune(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::CheckPointModeTune; }
 
@@ -200,7 +200,7 @@ public:
 class FMainMenuModeCheckPointModeEnd : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeCheckPointModeEnd(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeCheckPointModeEnd(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::CheckPointModeEnd; }
 
@@ -214,7 +214,7 @@ public:
 class FMainMenuModeGameControl : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeGameControl(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeGameControl(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::GameControl; }
 
@@ -229,7 +229,7 @@ public:
 class FMainMenuModeMainMenuControl : public FMainMenuModeBase
 {
 public:
-	FMainMenuModeMainMenuControl(AMainMenuPluginHUD* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
+	FMainMenuModeMainMenuControl(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuModeBase(OwnedHUD) {}
 
 	virtual EMainMenuMode GetType() const override { return EMainMenuMode::MainMenuControl; }
 

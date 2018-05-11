@@ -3,12 +3,12 @@
 #include "Misc/Paths.h"
 #include "HAL/FileManagerGeneric.h"
 #include "Classes/Kismet/GameplayStatics.h"
-#include "MainMenuPluginHUD.h"
+#include "MainMenuPluginHUDComponent.h"
 
 
 UMainMenuSaveObject::UMainMenuSaveObject()
 {
-	FileName = "Race" + AMainMenuPluginHUD::DateToStringRus(FDateTime::Now()) + "-" + AMainMenuPluginHUD::DateToTimeRus(FDateTime::Now(), ".");
+	FileName = "Race" + UMainMenuPluginHUDComponent::DateToStringRus(FDateTime::Now()) + "-" + UMainMenuPluginHUDComponent::DateToTimeRus(FDateTime::Now(), ".");
 	LastDate = FDateTime::Now();
 }
 

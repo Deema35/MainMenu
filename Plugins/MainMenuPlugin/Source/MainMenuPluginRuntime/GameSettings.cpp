@@ -4,7 +4,7 @@
 #include "Engine/Engine.h"
 #include "GameFramework/GameUserSettings.h"
 #include "Misc/ConfigCacheIni.h"
-#include "MainMenuPluginHUD.h"
+#include "MainMenuPluginHUDComponent.h"
 #include "MainMenuGameInstance.h"
 #include "Internationalization/Culture.h"
 
@@ -361,17 +361,19 @@ bool FGameSettings::SaveNotResolutionSettings()
 
 void FGameSettings::SetNotVideoSettings()
 {
-	SoundVolumeChange(HUD->SoundClass, SoundVolum);
+	SoundVolumeChange(HUDComponent->SoundClass, SoundVolum);
 
 	ChangeLocalization((ELanguage)Language);
-	UGameInstance* GameInstLoc = HUD->GetWorld()->GetGameInstance();
+
+	UGameInstance* GameInstLoc = HUDComponent->GetWorld()->GetGameInstance();
+
 	if (GameInstLoc)
 	{
 		UMainMenuGameInstance* GameInst = Cast<UMainMenuGameInstance>(GameInstLoc);
 
 		if (GameInst && ShowFPS != GameInst->CurrentShowFPS)
 		{
-			HUD->GetWorld()->GetFirstPlayerController()->ConsoleCommand(TEXT("Stat FPS"), false);
+			HUDComponent->GetWorld()->GetFirstPlayerController()->ConsoleCommand(TEXT("Stat FPS"), false);
 			GameInst->CurrentShowFPS = ShowFPS;
 		}
 	}

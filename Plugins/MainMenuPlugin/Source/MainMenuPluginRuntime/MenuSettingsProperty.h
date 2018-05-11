@@ -5,7 +5,7 @@
 
 #define LOCTEXT_NAMESPACE "MainMenuPlugin"
 
-class AMainMenuPluginHUD;
+class UMainMenuPluginHUDComponent;
 
 
 
@@ -42,11 +42,11 @@ enum class EMenuSettingsFloatPropertyType : uint8
 
 template<typename T, typename ID> class FMenuSettingsPropertyBase;
 
-FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>* EMenuSettingsIntPropertyTypeCreateInt(EMenuSettingsIntPropertyType PropertyType, AMainMenuPluginHUD* HUD);
+FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>* EMenuSettingsIntPropertyTypeCreateInt(EMenuSettingsIntPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD);
 
-FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>* EMenuSettingsIntPropertyTypeCreateBool(EMenuSettingsBoolPropertyType PropertyType, AMainMenuPluginHUD* HUD);
+FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>* EMenuSettingsIntPropertyTypeCreateBool(EMenuSettingsBoolPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD);
 
-FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>* EMenuSettingsIntPropertyTypeCreateFloat(EMenuSettingsFloatPropertyType PropertyType, AMainMenuPluginHUD* HUD);
+FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>* EMenuSettingsIntPropertyTypeCreateFloat(EMenuSettingsFloatPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD);
 
 
 

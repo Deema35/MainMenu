@@ -1,10 +1,10 @@
 // Copyright 2018 Pavlov Dmitriy
 #include "MenuSettingsProperty.h"
-#include "MainMenuPluginHUD.h"
+#include "MainMenuPluginHUDComponent.h"
 
 static_assert((int)EMenuSettingsIntPropertyType::end == 8, "Need update factory metod");
 
-FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>* EMenuSettingsIntPropertyTypeCreateInt(EMenuSettingsIntPropertyType PropertyType, AMainMenuPluginHUD* HUD)
+FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>* EMenuSettingsIntPropertyTypeCreateInt(EMenuSettingsIntPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD)
 {
 	switch (PropertyType)
 	{
@@ -49,7 +49,7 @@ FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>* EMenuSettingsInt
 
 static_assert((int)EMenuSettingsBoolPropertyType::end == 3, "Need update factory metod");
 
-FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>* EMenuSettingsIntPropertyTypeCreateBool(EMenuSettingsBoolPropertyType PropertyType, AMainMenuPluginHUD* HUD)
+FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>* EMenuSettingsIntPropertyTypeCreateBool(EMenuSettingsBoolPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD)
 {
 	switch (PropertyType)
 	{
@@ -72,7 +72,7 @@ FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>* EMenuSettingsInt
 
 static_assert((int)EMenuSettingsFloatPropertyType::end == 2, "Need update factory metod");
 
-FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>* EMenuSettingsIntPropertyTypeCreateFloat(EMenuSettingsFloatPropertyType PropertyType, AMainMenuPluginHUD* HUD)
+FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>* EMenuSettingsIntPropertyTypeCreateFloat(EMenuSettingsFloatPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD)
 {
 	switch (PropertyType)
 	{

@@ -1,6 +1,6 @@
 // Copyright 2018 Pavlov Dmitriy
 #include "MainMenuPluginButtons.h"
-#include "MainMenuPluginHUD.h"
+#include "MainMenuPluginHUDComponent.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "SaveObjectsMenu.h"
@@ -8,7 +8,7 @@
 
 static_assert((int)EMainMenuPluginButtonType::end == 19, "Need update factory metod");
 
-std::shared_ptr<FMainMenuPluginButtonBase> FMenuPluginFactoryButton::ButtonCreate(EMainMenuPluginButtonType ButtonTrpe, AMainMenuPluginHUD* OwnedHUD)
+std::shared_ptr<FMainMenuPluginButtonBase> FMenuPluginFactoryButton::ButtonCreate(EMainMenuPluginButtonType ButtonTrpe, UMainMenuPluginHUDComponent* OwnedHUD)
 {
 	switch (ButtonTrpe)
 	{

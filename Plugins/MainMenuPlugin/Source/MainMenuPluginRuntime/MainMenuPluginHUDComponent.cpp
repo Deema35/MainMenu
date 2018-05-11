@@ -1,6 +1,6 @@
 // Copyright 2018 Pavlov Dmitriy
 
-#include "MainMenuPluginHUD.h"
+#include "MainMenuPluginHUDComponent.h"
 #include "Misc/Paths.h"
 #include "HAL/FileManagerGeneric.h"
 #include "SaveObjectsMenu.h"
@@ -14,14 +14,26 @@
 #include "MainMenuGameInstance.h"
 
 
-void AMainMenuPluginHUD::PostInitializeComponents()
+void UMainMenuPluginHUDComponent::InitializeComponent()
 {
-	Super::PostInitializeComponents();
+	Super::InitializeComponent();
 
+
+	if (!Cast<AHUD>(GetOwner()))
+	{
+		UE_LOG(LogTemp, Fatal, TEXT("UMainMenuPluginHUDComponent can use only for HUD actor"));
+	}
+
+	if (!CheckWidgets())
+	{
+		UE_LOG(LogTemp, Error, TEXT("Not all Widgets in MainMenuComponent set"));
+	}
+
+	GameSettings.HUDComponent = this;
 	GameSettings.SetSetting();
 
 	EliminatePauseText();
-
+	
 	std::shared_ptr<FMenuPluginFactoryButton> ButtonFactory = GetMenuButtonsFactory();
 
 	for (int i = 0; i < (int)EMainMenuPluginButtonType::end; i++)
@@ -56,7 +68,26 @@ void AMainMenuPluginHUD::PostInitializeComponents()
 
 }
 
-void AMainMenuPluginHUD::BeginPlay()
+bool UMainMenuPluginHUDComponent::CheckWidgets()
+{
+	if (!GameScreenWidget) return false;
+
+	if (!MainMenuWidget) return false;
+
+	if (!GameMenuWidget) return false;
+
+	if (!SettingsMenuWidget) return false;
+
+	if (!KeyBindMenuWidget) return false;
+
+	if (!TitlesMenuWidget) return false;
+
+	if (!ControlWidget) return false;
+
+	return true;
+}
+
+void UMainMenuPluginHUDComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -64,28 +95,30 @@ void AMainMenuPluginHUD::BeginPlay()
 	if (GetWorld())
 	{
 		const FString LevelName = GetWorld()->GetMapName();
-
-		if (LevelName.Find(MainMenuMapName) != -1) SetMainMenuMode(EMainMenuMode::MainMenu);
+		
+		if (LevelName.Find(MainMenuMapName) != -1)
+		{
+			SetMainMenuMode(EMainMenuMode::MainMenu);
+		}
 		else SetMainMenuMode(EMainMenuMode::Game);
 	}
 }
 
 
 
-std::shared_ptr<FMainMenuModeFactory> AMainMenuPluginHUD::GetMenuModeFactory()
+std::shared_ptr<FMainMenuModeFactory> UMainMenuPluginHUDComponent::GetMenuModeFactory()
 {
 	return std::shared_ptr<FMainMenuModeFactory>(new FMainMenuModeFactory());
 }
 
-std::shared_ptr<FMenuPluginFactoryButton> AMainMenuPluginHUD::GetMenuButtonsFactory()
+std::shared_ptr<FMenuPluginFactoryButton> UMainMenuPluginHUDComponent::GetMenuButtonsFactory()
 {
 	return std::shared_ptr<FMenuPluginFactoryButton>(new FMenuPluginFactoryButton());
 }
 
 
-void AMainMenuPluginHUD::SetMainMenuMode(EMainMenuMode NewMode, bool WithoutCheck)
+void UMainMenuPluginHUDComponent::SetMainMenuMode(EMainMenuMode NewMode, bool WithoutCheck)
 {
-	
 	if (CurrentMode != NewMode || WithoutCheck)
 	{
 		if (CurrentMode != EMainMenuMode::end) MenuModes[(int)CurrentMode]->UnSetMode();
@@ -99,7 +132,7 @@ void AMainMenuPluginHUD::SetMainMenuMode(EMainMenuMode NewMode, bool WithoutChec
 
 
 
-void AMainMenuPluginHUD::GetAllKeyBindings(TArray<FInputActionKeyMapping>& Bindings)
+void UMainMenuPluginHUDComponent::GetAllKeyBindings(TArray<FInputActionKeyMapping>& Bindings)
 {
 	Bindings.Empty();
 
@@ -114,7 +147,7 @@ void AMainMenuPluginHUD::GetAllKeyBindings(TArray<FInputActionKeyMapping>& Bindi
 	}
 }
 
-void AMainMenuPluginHUD::EliminatePauseText()
+void UMainMenuPluginHUDComponent::EliminatePauseText()
 {
 	if (GetWorld() && GetWorld()->GetGameViewport())
 	{
@@ -123,12 +156,12 @@ void AMainMenuPluginHUD::EliminatePauseText()
 	return;
 }
 
-void AMainMenuPluginHUD::ButtonClick(EMainMenuPluginButtonType ButtonType)
+void UMainMenuPluginHUDComponent::ButtonClick(EMainMenuPluginButtonType ButtonType)
 {
 	Buttons[(int)ButtonType]->Click();
 }
 
-FText AMainMenuPluginHUD::GetButtonName(EMainMenuPluginButtonType ButtonType) const
+FText UMainMenuPluginHUDComponent::GetButtonName(EMainMenuPluginButtonType ButtonType) const
 {
 	return Buttons[(int)ButtonType]->GetName();
 }
@@ -136,7 +169,7 @@ FText AMainMenuPluginHUD::GetButtonName(EMainMenuPluginButtonType ButtonType) co
 
 
 
-FKey AMainMenuPluginHUD::GetMouseWheelInput(const FPointerEvent& PointerEvent)
+FKey UMainMenuPluginHUDComponent::GetMouseWheelInput(const FPointerEvent& PointerEvent)
 {
 	if (PointerEvent.GetWheelDelta() > 0)
 	{
@@ -150,7 +183,7 @@ FKey AMainMenuPluginHUD::GetMouseWheelInput(const FPointerEvent& PointerEvent)
 
 }
 
-FString AMainMenuPluginHUD::DateToStringRus(FDateTime Date)
+FString UMainMenuPluginHUDComponent::DateToStringRus(FDateTime Date)
 {
 	FString DataLoc;
 	if (Date.GetDay() > 9)
@@ -177,7 +210,7 @@ FString AMainMenuPluginHUD::DateToStringRus(FDateTime Date)
 	return DataLoc;
 }
 
-FString AMainMenuPluginHUD::DateToTimeRus(FDateTime Date, FString Separator)
+FString UMainMenuPluginHUDComponent::DateToTimeRus(FDateTime Date, FString Separator)
 {
 	FString DataLoc;
 

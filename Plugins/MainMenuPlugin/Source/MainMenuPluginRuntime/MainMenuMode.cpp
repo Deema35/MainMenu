@@ -1,12 +1,12 @@
 // Copyright 2018 Pavlov Dmitriy
 #include "MainMenuMode.h"
-#include "MainMenuPluginHUD.h"
+#include "MainMenuPluginHUDComponent.h"
 #include "Engine/World.h"
 #include "Blueprint/UserWidget.h"
 
 static_assert((int)EMainMenuMode::end == 12, "Need update factory metod");
 
-std::shared_ptr<FMainMenuModeBase> FMainMenuModeFactory::Create(EMainMenuMode MenuMode, AMainMenuPluginHUD* OwnedHUD)
+std::shared_ptr<FMainMenuModeBase> FMainMenuModeFactory::Create(EMainMenuMode MenuMode, UMainMenuPluginHUDComponent* OwnedHUD)
 {
 	switch (MenuMode)
 	{

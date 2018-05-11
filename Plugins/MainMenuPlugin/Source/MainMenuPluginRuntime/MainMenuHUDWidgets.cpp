@@ -1,6 +1,7 @@
 // Copyright 2018 Pavlov Dmitriy
 #include "MainMenuHUDWidgets.h"
-#include "MainMenuPluginHUD.h"
+#include "MainMenuPluginHUDComponent.h"
+#include "GameFramework/HUD.h"
 #include "Runtime/UMG/Public/Blueprint/WidgetBlueprintLibrary.h"
 
 //UMainMenuRadarHUDWidget.........................................................................
@@ -9,11 +10,19 @@ void UMainMenuRadarHUDWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	if (GetWorld()) HUD = Cast<AMainMenuPluginHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	AHUD* HUD = GetWorld()->GetFirstPlayerController()->GetHUD();
 
-	if (!HUD)
+	if (!HUD) throw;
+	
+	UActorComponent* ActorComponent = HUD->GetComponentByClass(UMainMenuPluginHUDComponent::StaticClass());
+
+	if (!ActorComponent)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Set ATFCPHUD"));
+	}
+	else
+	{
+		HUDComponent = Cast<UMainMenuPluginHUDComponent>(ActorComponent);
 	}
 }
 
@@ -23,7 +32,7 @@ void UMainMenuRadarHUDWidget::NativePaint(FPaintContext& InContext) const
 {
 	Super::NativePaint(InContext);
 
-	const std::vector<FVector*>& RadarTargets = HUD->GetRadarTargets();
+	const std::vector<FVector*>& RadarTargets = HUDComponent->GetRadarTargets();
 
 	for (int i = 0; i < RadarTargets.size(); i++)
 	{

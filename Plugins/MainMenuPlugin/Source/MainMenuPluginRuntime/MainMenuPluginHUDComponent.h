@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "GameFramework/HUD.h"
+#include "Components/ActorComponent.h"
 #include <memory>
 #include <vector>
 #include <functional>
@@ -12,7 +12,7 @@
 #include "KeyBindMenu.h"
 #include "Input/Events.h"
 #include "MenuSettingsProperty.h"
-#include "MainMenuPluginHUD.generated.h"
+#include "MainMenuPluginHUDComponent.generated.h"
 
 class USoundClass;
 class UUserWidget;
@@ -32,16 +32,16 @@ class UMainMenuRadarHUDWidget;
 
 
 
-UCLASS()
-class MAINMENUPLUGINRUNTIME_API AMainMenuPluginHUD : public AHUD
+UCLASS(ClassGroup = (MainMenuPlugin), BlueprintType, meta = (BlueprintSpawnableComponent, ShortTooltip = "A HUD component need for crate MainMenu(MainMenuPlugin)."))
+class MAINMENUPLUGINRUNTIME_API UMainMenuPluginHUDComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
 
-	AMainMenuPluginHUD() { GameSettings.HUD = this; }
+	UMainMenuPluginHUDComponent() { bWantsInitializeComponent = true;}
 
-	virtual void PostInitializeComponents() override;
+	virtual void InitializeComponent() override;
 
 	virtual void BeginPlay() override;
 
@@ -181,6 +181,8 @@ private:
 
 	virtual std::shared_ptr<FMenuPluginFactoryButton> GetMenuButtonsFactory();
 
+	bool CheckWidgets();
+
 private:
 
 	std::vector<std::shared_ptr<FMainMenuPluginButtonBase>> Buttons;
@@ -197,3 +199,5 @@ private:
 
 	std::vector<FVector*> RadarTargets;
 };
+
+

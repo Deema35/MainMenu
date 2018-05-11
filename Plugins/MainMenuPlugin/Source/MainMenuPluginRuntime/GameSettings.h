@@ -6,7 +6,7 @@
 
 class UGameUserSettings;
 class USoundClass;
-class AMainMenuPluginHUD;
+class UMainMenuPluginHUDComponent;
 
 
 UENUM(BlueprintType)
@@ -81,7 +81,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 SoundVolum = 50;
 
-	AMainMenuPluginHUD* HUD = nullptr;
+	UMainMenuPluginHUDComponent* HUDComponent = nullptr;
 	
 public:
 

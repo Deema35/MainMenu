@@ -6,7 +6,7 @@
 
 #define LOCTEXT_NAMESPACE "MainMenuPlugin"
 
-class AMainMenuPluginHUD;
+class UMainMenuPluginHUDComponent;
 class FMainMenuPluginButtonBase;
 
 UENUM(BlueprintType)
@@ -37,7 +37,7 @@ enum class  EMainMenuPluginButtonType : uint8
 class MAINMENUPLUGINRUNTIME_API FMenuPluginFactoryButton
 {
 public:
-	virtual std::shared_ptr<FMainMenuPluginButtonBase> ButtonCreate(EMainMenuPluginButtonType ButtonTrpe, AMainMenuPluginHUD* OwnedHUD);
+	virtual std::shared_ptr<FMainMenuPluginButtonBase> ButtonCreate(EMainMenuPluginButtonType ButtonTrpe, UMainMenuPluginHUDComponent* OwnedHUD);
 };
 
 
@@ -45,7 +45,7 @@ public:
 class FMainMenuPluginButtonBase
 {
 public:
-	FMainMenuPluginButtonBase(AMainMenuPluginHUD* _OwnedHUD) : OwnedHUD(_OwnedHUD) {}
+	FMainMenuPluginButtonBase(UMainMenuPluginHUDComponent* _OwnedHUD) : OwnedHUD(_OwnedHUD) {}
 
 	virtual ~FMainMenuPluginButtonBase() {}
 
@@ -57,7 +57,7 @@ public:
 
 protected:
 
-	AMainMenuPluginHUD* OwnedHUD = nullptr;
+	UMainMenuPluginHUDComponent* OwnedHUD = nullptr;
 
 };
 
@@ -65,7 +65,7 @@ class FMainMenuPluginButtonApply : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonApply(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonApply(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Apply;}
 
@@ -79,7 +79,7 @@ class FMainMenuPluginButtonBack : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonBack(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonBack(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Back; }
 
@@ -93,7 +93,7 @@ class FMainMenuPluginButtonCancel : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonCancel(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonCancel(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Cancel; }
 
@@ -107,7 +107,7 @@ class FMainMenuPluginButtonCheckPointMode : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonCheckPointMode(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonCheckPointMode(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::CheckPointMode; }
 
@@ -121,7 +121,7 @@ class FMainMenuPluginButtonDefaultKeys : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonDefaultKeys(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonDefaultKeys(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::DefaultKeys; }
 
@@ -135,7 +135,7 @@ class FMainMenuPluginButtonDelete : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonDelete(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonDelete(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Delete; }
 
@@ -149,7 +149,7 @@ class FMainMenuPluginButtonTitles : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonTitles(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonTitles(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Titles; }
 
@@ -163,7 +163,7 @@ class FMainMenuPluginButtonFreeRace : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonFreeRace(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonFreeRace(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::FreeRace; }
 
@@ -177,7 +177,7 @@ class FMainMenuPluginButtonKeyBind : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonKeyBind(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonKeyBind(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::KeyBind; }
 
@@ -191,7 +191,7 @@ class FMainMenuPluginButtonLoad : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonLoad(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonLoad(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Load; }
 
@@ -205,7 +205,7 @@ class FMainMenuPluginButtonMainMenu : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonMainMenu(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonMainMenu(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::MainMenu; }
 
@@ -219,7 +219,7 @@ class FMainMenuPluginButtonNewRace : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonNewRace(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonNewRace(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::NewRace; }
 
@@ -233,7 +233,7 @@ class FMainMenuPluginButtonOK : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonOK(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonOK(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::OK; }
 
@@ -247,7 +247,7 @@ class FMainMenuPluginButtonRepeatRace : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonRepeatRace(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonRepeatRace(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::RepeatRace; }
 
@@ -261,7 +261,7 @@ class FMainMenuPluginButtonRestart : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonRestart(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonRestart(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Restart; }
 
@@ -275,7 +275,7 @@ class FMainMenuPluginButtonResume : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonResume(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonResume(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Resume; }
 
@@ -289,7 +289,7 @@ class FMainMenuPluginButtonSettings : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonSettings(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonSettings(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Settings; }
 
@@ -303,7 +303,7 @@ class FMainMenuPluginButtonExit : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonExit(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonExit(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Exit; }
 
@@ -317,7 +317,7 @@ class FMainMenuPluginButtonControl : public FMainMenuPluginButtonBase
 {
 public:
 
-	FMainMenuPluginButtonControl(AMainMenuPluginHUD* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
+	FMainMenuPluginButtonControl(UMainMenuPluginHUDComponent* OwnedHUD) : FMainMenuPluginButtonBase(OwnedHUD) {}
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::Control; }
 
