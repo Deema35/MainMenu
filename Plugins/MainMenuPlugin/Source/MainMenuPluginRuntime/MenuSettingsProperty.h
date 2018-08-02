@@ -2,6 +2,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "UObject/Class.h"  //For UENUM
+#include "MainMenuCore.h"
 
 #define LOCTEXT_NAMESPACE "MainMenuPlugin"
 
@@ -40,40 +41,11 @@ enum class EMenuSettingsFloatPropertyType : uint8
 	end
 };
 
-template<typename T, typename ID> class FMenuSettingsPropertyBase;
+std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>> EMenuSettingsIntPropertyTypeCreateInt(EMenuSettingsIntPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD);
 
-FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>* EMenuSettingsIntPropertyTypeCreateInt(EMenuSettingsIntPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD);
+std::unique_ptr<FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>> EMenuSettingsIntPropertyTypeCreateBool(EMenuSettingsBoolPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD);
 
-FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>* EMenuSettingsIntPropertyTypeCreateBool(EMenuSettingsBoolPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD);
-
-FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>* EMenuSettingsIntPropertyTypeCreateFloat(EMenuSettingsFloatPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD);
-
-
-
-
-
-template<typename T, typename ID>
-class FMenuSettingsPropertyBase
-{
-public:
-	FMenuSettingsPropertyBase(T& _Property) : Property(_Property) {}
-
-	virtual ~FMenuSettingsPropertyBase() {}
-
-	virtual ID GetType() const = 0;
-
-	void SetProperty(T NewProperty) { Property = NewProperty; }
-
-	virtual FText GetPropertyName() const = 0;
-
-	T GetProperty() const { return Property; }
-
-protected:
-
-	T & Property;
-};
-
-
+std::unique_ptr<FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>> EMenuSettingsIntPropertyTypeCreateFloat(EMenuSettingsFloatPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD);
 
 
 class FMenuSettingsPropertyAntiAliasing : public FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>

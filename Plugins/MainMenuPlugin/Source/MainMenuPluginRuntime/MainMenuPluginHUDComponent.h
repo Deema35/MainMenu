@@ -6,24 +6,26 @@
 #include <memory>
 #include <vector>
 #include <functional>
-#include "GameSettings.h"
 #include "Classes/GameFramework/PlayerInput.h"
-#include "MainMenuMode.h"
 #include "KeyBindMenu.h"
 #include "Input/Events.h"
+#include "MainMenuCore.h"
 #include "MenuSettingsProperty.h"
 #include "MainMenuPluginHUDComponent.generated.h"
 
 class USoundClass;
 class UUserWidget;
 class FMainMenuPluginButtonBase;
+class FMainMenuModeBase;
 enum class EMainMenuPluginButtonType : uint8;
+enum class EMainMenuMode : uint8;
 enum class EQualityLevels : uint8;
 class UTFCPGameInstance;
 class ATFCPGameState;
 class FMenuPluginFactoryButton;
 class FMainMenuModeFactory;
 class UMainMenuRadarHUDWidget;
+
 
 /**
  * 
@@ -39,7 +41,7 @@ class MAINMENUPLUGINRUNTIME_API UMainMenuPluginHUDComponent : public UActorCompo
 
 public:
 
-	UMainMenuPluginHUDComponent() { bWantsInitializeComponent = true;}
+	UMainMenuPluginHUDComponent();
 
 	virtual void InitializeComponent() override;
 
@@ -83,31 +85,31 @@ public:
 	static FString DateToTimeRus(FDateTime Date, FString Separator);
 
 	UFUNCTION(BlueprintCallable, Category = "MainMenuPlugin")
-		void SetPropertyInt(EMenuSettingsIntPropertyType PropertyType, int32 Value) { IntPropertys[(int)PropertyType]->SetProperty(Value); }
+		void SetPropertyInt(EMenuSettingsIntPropertyType PropertyType, int32 Value) { IntPropertys.Get(PropertyType).SetProperty(Value); }
 	
 	UFUNCTION(BlueprintCallable, Category = "MainMenuPlugin")
-		void SetPropertyBool(EMenuSettingsBoolPropertyType PropertyType, bool Value) { BoolPropertys[(int)PropertyType]->SetProperty(Value); }
+		void SetPropertyBool(EMenuSettingsBoolPropertyType PropertyType, bool Value) { BoolPropertys.Get(PropertyType).SetProperty(Value); }
 
 	UFUNCTION(BlueprintCallable, Category = "MainMenuPlugin")
-		void SetPropertyFloat(EMenuSettingsFloatPropertyType PropertyType, float Value) { FloatPropertys[(int)PropertyType]->SetProperty(Value); }
+		void SetPropertyFloat(EMenuSettingsFloatPropertyType PropertyType, float Value) { FloatPropertys.Get(PropertyType).SetProperty(Value); }
 
 	UFUNCTION(BlueprintPure, Category = "MainMenuPlugin")
-		int32 GetPropertyInt(EMenuSettingsIntPropertyType PropertyType)const { return IntPropertys[(int)PropertyType]->GetProperty(); }
+		int32 GetPropertyInt(EMenuSettingsIntPropertyType PropertyType)const { return IntPropertys.Get(PropertyType).GetProperty(); }
 
 	UFUNCTION(BlueprintPure, Category = "MainMenuPlugin")
-		bool GetPropertyBool(EMenuSettingsBoolPropertyType PropertyType)const { return BoolPropertys[(int)PropertyType]->GetProperty(); }
+		bool GetPropertyBool(EMenuSettingsBoolPropertyType PropertyType)const { return BoolPropertys.Get(PropertyType).GetProperty(); }
 
 	UFUNCTION(BlueprintPure, Category = "MainMenuPlugin")
-		float GetPropertyFloat(EMenuSettingsFloatPropertyType PropertyType)const { return FloatPropertys[(int)PropertyType]->GetProperty(); }
+		float GetPropertyFloat(EMenuSettingsFloatPropertyType PropertyType)const { return FloatPropertys.Get(PropertyType).GetProperty(); }
 
 	UFUNCTION(BlueprintPure, Category = "MainMenuPlugin")
-		FText GetPropertyNameInt(EMenuSettingsIntPropertyType PropertyType) const { return IntPropertys[(int)PropertyType]->GetPropertyName(); }
+		FText GetPropertyNameInt(EMenuSettingsIntPropertyType PropertyType) const { return IntPropertys.Get(PropertyType).GetPropertyName(); }
 
 	UFUNCTION(BlueprintPure, Category = "MainMenuPlugin")
-		FText GetPropertyNameBool(EMenuSettingsBoolPropertyType PropertyType) const { return BoolPropertys[(int)PropertyType]->GetPropertyName(); }
+		FText GetPropertyNameBool(EMenuSettingsBoolPropertyType PropertyType) const { return BoolPropertys.Get(PropertyType).GetPropertyName(); }
 
 	UFUNCTION(BlueprintPure, Category = "MainMenuPlugin")
-		FText GetPropertyNameFloat(EMenuSettingsFloatPropertyType PropertyType) const { return FloatPropertys[(int)PropertyType]->GetPropertyName(); }
+		FText GetPropertyNameFloat(EMenuSettingsFloatPropertyType PropertyType) const { return FloatPropertys.Get(PropertyType).GetPropertyName(); }
 
 	UFUNCTION(BlueprintPure, Category = "MainMenuPlugin")
 		const TArray<FString>& GetResolutionList() const { return GameSettings.ResolutionList; }
@@ -185,19 +187,23 @@ private:
 
 private:
 
-	std::vector<std::shared_ptr<FMainMenuPluginButtonBase>> Buttons;
+	ItemStorage<FMainMenuPluginButtonBase, EMainMenuPluginButtonType> Buttons;
 
-	std::vector<std::shared_ptr<FMainMenuModeBase>> MenuModes;
+	ItemStorage<FMainMenuModeBase, EMainMenuMode> MenuModes;
 
-	std::vector<std::shared_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>> IntPropertys;
+	ItemStorage<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>, EMenuSettingsIntPropertyType> IntPropertys;
 
-	std::vector<std::shared_ptr<FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>>> BoolPropertys;
+	ItemStorage<FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>, EMenuSettingsBoolPropertyType> BoolPropertys;
 
-	std::vector<std::shared_ptr<FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>>> FloatPropertys;
+	ItemStorage<FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>, EMenuSettingsFloatPropertyType> FloatPropertys;
 
-	EMainMenuMode CurrentMode = EMainMenuMode::end;
+	EMainMenuMode CurrentMode;
 
 	std::vector<FVector*> RadarTargets;
+
+	std::shared_ptr<FMenuPluginFactoryButton> ButtonFactory;
+
+	std::shared_ptr<FMainMenuModeFactory> ModeFactory;
 };
 
 

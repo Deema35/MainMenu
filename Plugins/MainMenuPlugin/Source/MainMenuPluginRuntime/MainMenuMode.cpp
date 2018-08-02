@@ -6,58 +6,58 @@
 
 static_assert((int)EMainMenuMode::end == 12, "Need update factory metod");
 
-std::shared_ptr<FMainMenuModeBase> FMainMenuModeFactory::Create(EMainMenuMode MenuMode, UMainMenuPluginHUDComponent* OwnedHUD)
+std::unique_ptr<FMainMenuModeBase> FMainMenuModeFactory::Create(EMainMenuMode MenuMode, UMainMenuPluginHUDComponent* OwnedHUD)
 {
 	switch (MenuMode)
 	{
 	case EMainMenuMode::Game:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeGame(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeGame(OwnedHUD));
 
 	case EMainMenuMode::CheckPointModeEnd:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeCheckPointModeEnd(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeCheckPointModeEnd(OwnedHUD));
 
 	case EMainMenuMode::CheckPointModeTune:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeCheckPointModeTune(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeCheckPointModeTune(OwnedHUD));
 
 	case EMainMenuMode::TitlesMenu:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeTitlesMenu(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeTitlesMenu(OwnedHUD));
 
 	case EMainMenuMode::GameMenu:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeGameMenu(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeGameMenu(OwnedHUD));
 
 	case EMainMenuMode::GameSettings:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeGameSettings(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeGameSettings(OwnedHUD));
 
 	case EMainMenuMode::GameKeyBind:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeGameKeyBind(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeGameKeyBind(OwnedHUD));
 
 	case EMainMenuMode::MainMenuKeyBing:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeMainMenuKeyBind(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeMainMenuKeyBind(OwnedHUD));
 
 
 	case EMainMenuMode::MainMenu:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeMainMenu(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeMainMenu(OwnedHUD));
 
 	case EMainMenuMode::Settings:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeSettings(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeSettings(OwnedHUD));
 
 	case EMainMenuMode::GameControl:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeGameControl(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeGameControl(OwnedHUD));
 
 	case EMainMenuMode::MainMenuControl:
 
-		return std::shared_ptr<FMainMenuModeBase>(new FMainMenuModeMainMenuControl(OwnedHUD));
+		return std::unique_ptr<FMainMenuModeBase>(new FMainMenuModeMainMenuControl(OwnedHUD));
 
 	default: throw;
 	}

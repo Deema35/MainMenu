@@ -30,7 +30,7 @@ enum class EMainMenuMode : uint8
 class MAINMENUPLUGINRUNTIME_API FMainMenuModeFactory
 {
 public:
-	virtual std::shared_ptr<FMainMenuModeBase> Create(EMainMenuMode MenuMode, UMainMenuPluginHUDComponent* OwnedHUD);
+	virtual std::unique_ptr<FMainMenuModeBase> Create(EMainMenuMode MenuMode, UMainMenuPluginHUDComponent* OwnedHUD);
 };
 
 

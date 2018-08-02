@@ -12,6 +12,21 @@
 #include "Engine/World.h"
 #include "MainMenuPluginButtons.h"
 #include "MainMenuGameInstance.h"
+#include "MainMenuMode.h"
+
+#include "GameSettings.h"
+
+UMainMenuPluginHUDComponent::UMainMenuPluginHUDComponent() :
+	Buttons([this](EMainMenuPluginButtonType ButtonType) {return GetMenuButtonsFactory()->ButtonCreate(ButtonType, this); } , EMainMenuPluginButtonType::end),
+	MenuModes([this](EMainMenuMode ModeType) {return GetMenuModeFactory()->Create(ModeType, this); }, EMainMenuMode::end),
+	IntPropertys([this](EMenuSettingsIntPropertyType PropertyType) {return EMenuSettingsIntPropertyTypeCreateInt(PropertyType, this); }, EMenuSettingsIntPropertyType::end),
+	BoolPropertys([this](EMenuSettingsBoolPropertyType PropertyType) {return EMenuSettingsIntPropertyTypeCreateBool(PropertyType, this); }, EMenuSettingsBoolPropertyType::end),
+	FloatPropertys([this](EMenuSettingsFloatPropertyType PropertyType) {return EMenuSettingsIntPropertyTypeCreateFloat(PropertyType, this); }, EMenuSettingsFloatPropertyType::end),
+	CurrentMode(EMainMenuMode::end)
+{
+	bWantsInitializeComponent = true; 
+
+}
 
 
 void UMainMenuPluginHUDComponent::InitializeComponent()
@@ -34,38 +49,6 @@ void UMainMenuPluginHUDComponent::InitializeComponent()
 
 	EliminatePauseText();
 	
-	std::shared_ptr<FMenuPluginFactoryButton> ButtonFactory = GetMenuButtonsFactory();
-
-	for (int i = 0; i < (int)EMainMenuPluginButtonType::end; i++)
-	{
-		Buttons.push_back(ButtonFactory->ButtonCreate((EMainMenuPluginButtonType)i, this));
-	}
-
-	std::shared_ptr<FMainMenuModeFactory> ModeFactory = GetMenuModeFactory();
-
-	for (int i = 0; i < (int)EMainMenuMode::end; i++)
-	{
-		MenuModes.push_back(ModeFactory->Create((EMainMenuMode)i, this));
-	}
-
-	for (int i = 0; i < (int)EMenuSettingsIntPropertyType::end; i++)
-	{
-		IntPropertys.push_back(std::shared_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>
-			(EMenuSettingsIntPropertyTypeCreateInt((EMenuSettingsIntPropertyType)i, this)));
-	}
-
-	for (int i = 0; i < (int)EMenuSettingsBoolPropertyType::end; i++)
-	{
-		BoolPropertys.push_back(std::shared_ptr<FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>>
-			(EMenuSettingsIntPropertyTypeCreateBool((EMenuSettingsBoolPropertyType)i, this)));
-	}
-
-	for (int i = 0; i < (int)EMenuSettingsFloatPropertyType::end; i++)
-	{
-		FloatPropertys.push_back(std::shared_ptr<FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>>
-			(EMenuSettingsIntPropertyTypeCreateFloat((EMenuSettingsFloatPropertyType)i, this)));
-	}
-
 }
 
 bool UMainMenuPluginHUDComponent::CheckWidgets()
@@ -100,7 +83,11 @@ void UMainMenuPluginHUDComponent::BeginPlay()
 		{
 			SetMainMenuMode(EMainMenuMode::MainMenu);
 		}
-		else SetMainMenuMode(EMainMenuMode::Game);
+		
+		else
+		{
+			SetMainMenuMode(EMainMenuMode::Game);
+		}
 	}
 }
 
@@ -108,12 +95,20 @@ void UMainMenuPluginHUDComponent::BeginPlay()
 
 std::shared_ptr<FMainMenuModeFactory> UMainMenuPluginHUDComponent::GetMenuModeFactory()
 {
-	return std::shared_ptr<FMainMenuModeFactory>(new FMainMenuModeFactory());
+	if (!ModeFactory)
+	{
+		ModeFactory = std::shared_ptr<FMainMenuModeFactory>(new FMainMenuModeFactory());
+	}
+	return ModeFactory;
 }
 
 std::shared_ptr<FMenuPluginFactoryButton> UMainMenuPluginHUDComponent::GetMenuButtonsFactory()
 {
-	return std::shared_ptr<FMenuPluginFactoryButton>(new FMenuPluginFactoryButton());
+	if (!ButtonFactory)
+	{
+		ButtonFactory = std::shared_ptr<FMenuPluginFactoryButton>(new FMenuPluginFactoryButton());
+	}
+	return ButtonFactory;
 }
 
 
@@ -121,16 +116,12 @@ void UMainMenuPluginHUDComponent::SetMainMenuMode(EMainMenuMode NewMode, bool Wi
 {
 	if (CurrentMode != NewMode || WithoutCheck)
 	{
-		if (CurrentMode != EMainMenuMode::end) MenuModes[(int)CurrentMode]->UnSetMode();
-		MenuModes[(int)NewMode]->SetMode();
+		if (CurrentMode != EMainMenuMode::end) MenuModes.Get(CurrentMode).UnSetMode();
+		MenuModes.Get(NewMode).SetMode();
 		CurrentMode = NewMode;
 	}
 	
 }
-
-
-
-
 
 void UMainMenuPluginHUDComponent::GetAllKeyBindings(TArray<FInputActionKeyMapping>& Bindings)
 {
@@ -158,12 +149,12 @@ void UMainMenuPluginHUDComponent::EliminatePauseText()
 
 void UMainMenuPluginHUDComponent::ButtonClick(EMainMenuPluginButtonType ButtonType)
 {
-	Buttons[(int)ButtonType]->Click();
+	Buttons.Get(ButtonType).Click();
 }
 
 FText UMainMenuPluginHUDComponent::GetButtonName(EMainMenuPluginButtonType ButtonType) const
 {
-	return Buttons[(int)ButtonType]->GetName();
+	return Buttons.Get(ButtonType).GetName();
 }
 
 

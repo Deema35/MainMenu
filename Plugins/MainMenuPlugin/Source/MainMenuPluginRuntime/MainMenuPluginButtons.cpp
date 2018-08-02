@@ -8,85 +8,85 @@
 
 static_assert((int)EMainMenuPluginButtonType::end == 19, "Need update factory metod");
 
-std::shared_ptr<FMainMenuPluginButtonBase> FMenuPluginFactoryButton::ButtonCreate(EMainMenuPluginButtonType ButtonTrpe, UMainMenuPluginHUDComponent* OwnedHUD)
+std::unique_ptr<FMainMenuPluginButtonBase> FMenuPluginFactoryButton::ButtonCreate(EMainMenuPluginButtonType ButtonTrpe, UMainMenuPluginHUDComponent* OwnedHUD)
 {
 	switch (ButtonTrpe)
 	{
 	case EMainMenuPluginButtonType::Apply:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonApply(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonApply(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Back:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonBack(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonBack(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Cancel:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonCancel(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonCancel(OwnedHUD));
 
 	case EMainMenuPluginButtonType::CheckPointMode:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonCheckPointMode(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonCheckPointMode(OwnedHUD));
 
 	case EMainMenuPluginButtonType::DefaultKeys:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonDefaultKeys(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonDefaultKeys(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Delete:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonDelete(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonDelete(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Exit:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonExit(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonExit(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Titles:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonTitles(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonTitles(OwnedHUD));
 
 	case EMainMenuPluginButtonType::FreeRace:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonFreeRace(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonFreeRace(OwnedHUD));
 
 	case EMainMenuPluginButtonType::KeyBind:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonKeyBind(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonKeyBind(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Load:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonLoad(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonLoad(OwnedHUD));
 
 	case EMainMenuPluginButtonType::MainMenu:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonMainMenu(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonMainMenu(OwnedHUD));
 
 	case EMainMenuPluginButtonType::NewRace:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonNewRace(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonNewRace(OwnedHUD));
 
 	case EMainMenuPluginButtonType::OK:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonOK(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonOK(OwnedHUD));
 
 	case EMainMenuPluginButtonType::RepeatRace:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonRepeatRace(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonRepeatRace(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Restart:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonRestart(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonRestart(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Resume:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonResume(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonResume(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Settings:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonSettings(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonSettings(OwnedHUD));
 
 	case EMainMenuPluginButtonType::Control:
 
-		return std::shared_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonControl(OwnedHUD));
+		return std::unique_ptr<FMainMenuPluginButtonBase>(new FMainMenuPluginButtonControl(OwnedHUD));
 
 
 	default : throw;

@@ -37,7 +37,9 @@ enum class  EMainMenuPluginButtonType : uint8
 class MAINMENUPLUGINRUNTIME_API FMenuPluginFactoryButton
 {
 public:
-	virtual std::shared_ptr<FMainMenuPluginButtonBase> ButtonCreate(EMainMenuPluginButtonType ButtonTrpe, UMainMenuPluginHUDComponent* OwnedHUD);
+
+	virtual std::unique_ptr<FMainMenuPluginButtonBase> ButtonCreate(EMainMenuPluginButtonType ButtonTrpe, UMainMenuPluginHUDComponent* OwnedHUD);
+
 };
 
 

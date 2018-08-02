@@ -4,44 +4,44 @@
 
 static_assert((int)EMenuSettingsIntPropertyType::end == 8, "Need update factory metod");
 
-FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>* EMenuSettingsIntPropertyTypeCreateInt(EMenuSettingsIntPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD)
+std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>> EMenuSettingsIntPropertyTypeCreateInt(EMenuSettingsIntPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD)
 {
 	switch (PropertyType)
 	{
 	case EMenuSettingsIntPropertyType::AntiAliasing:
 
-		return new FMenuSettingsPropertyAntiAliasing(HUD->GameSettings.AntiAliasing);
+		return std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>(new FMenuSettingsPropertyAntiAliasing(HUD->GameSettings.AntiAliasing));
 
 	case EMenuSettingsIntPropertyType::EffectsQuality:
 
-		return new FMenuSettingsPropertyEffectsQuality(HUD->GameSettings.EffectsQuality);
+		return std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>(new FMenuSettingsPropertyEffectsQuality(HUD->GameSettings.EffectsQuality));
 
 	
 	case EMenuSettingsIntPropertyType::PostProcessing:
 
-		return new FMenuSettingsPropertyPostProcessing(HUD->GameSettings.PostProcess);
+		return std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>(new FMenuSettingsPropertyPostProcessing(HUD->GameSettings.PostProcess));
 
 
 	case EMenuSettingsIntPropertyType::ShadowQuality:
 
-		return new FMenuSettingsPropertyShadowQuality(HUD->GameSettings.ShadowQuality);
+		return std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>(new FMenuSettingsPropertyShadowQuality(HUD->GameSettings.ShadowQuality));
 
 
 	case EMenuSettingsIntPropertyType::TextureQuality:
 
-		return new FMenuSettingsPropertyTextureQuality(HUD->GameSettings.TextureQuality);
+		return std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>(new FMenuSettingsPropertyTextureQuality(HUD->GameSettings.TextureQuality));
 
 	case EMenuSettingsIntPropertyType::ViewDistanceQuality:
 
-		return new FMenuSettingsPropertyViewDistanceQuality(HUD->GameSettings.ViewDistanceQuality);
+		return std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>(new FMenuSettingsPropertyViewDistanceQuality(HUD->GameSettings.ViewDistanceQuality));
 
 	case EMenuSettingsIntPropertyType::Language:
 
-		return new FMenuSettingsPropertyLanguage(HUD->GameSettings.Language);
+		return std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>(new FMenuSettingsPropertyLanguage(HUD->GameSettings.Language));
 
 	case EMenuSettingsIntPropertyType::SoundVolume:
 
-		return new FMenuSettingsPropertySoundVolume(HUD->GameSettings.SoundVolum);
+		return std::unique_ptr<FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>>(new FMenuSettingsPropertySoundVolume(HUD->GameSettings.SoundVolum));
 
 	default: throw;
 	}
@@ -49,22 +49,22 @@ FMenuSettingsPropertyBase<int32, EMenuSettingsIntPropertyType>* EMenuSettingsInt
 
 static_assert((int)EMenuSettingsBoolPropertyType::end == 3, "Need update factory metod");
 
-FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>* EMenuSettingsIntPropertyTypeCreateBool(EMenuSettingsBoolPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD)
+std::unique_ptr<FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>> EMenuSettingsIntPropertyTypeCreateBool(EMenuSettingsBoolPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD)
 {
 	switch (PropertyType)
 	{
 	case EMenuSettingsBoolPropertyType::FullScreen:
 
-		return new FMenuSettingsPropertyFullScreen(HUD->GameSettings.FullScreen);
+		return std::unique_ptr<FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>>(new FMenuSettingsPropertyFullScreen(HUD->GameSettings.FullScreen));
 
 	
 	case EMenuSettingsBoolPropertyType::VSync:
 
-		return new FMenuSettingsPropertyVSync(HUD->GameSettings.VSync);
+		return std::unique_ptr<FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>>(new FMenuSettingsPropertyVSync(HUD->GameSettings.VSync));
 
 	case EMenuSettingsBoolPropertyType::ShowFPS:
 
-		return new FMenuSettingsPropertyShowFPS(HUD->GameSettings.ShowFPS);
+		return std::unique_ptr<FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>>(new FMenuSettingsPropertyShowFPS(HUD->GameSettings.ShowFPS));
 
 	default: throw;
 	}
@@ -72,19 +72,19 @@ FMenuSettingsPropertyBase<bool, EMenuSettingsBoolPropertyType>* EMenuSettingsInt
 
 static_assert((int)EMenuSettingsFloatPropertyType::end == 2, "Need update factory metod");
 
-FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>* EMenuSettingsIntPropertyTypeCreateFloat(EMenuSettingsFloatPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD)
+std::unique_ptr<FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>> EMenuSettingsIntPropertyTypeCreateFloat(EMenuSettingsFloatPropertyType PropertyType, UMainMenuPluginHUDComponent* HUD)
 {
 	switch (PropertyType)
 	{
 	
 	case EMenuSettingsFloatPropertyType::MouseSensitive:
 
-		return new FMenuSettingsPropertyMouseSensitive(HUD->GameSettings.MouseSensitive);
+		return std::unique_ptr<FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>>(new FMenuSettingsPropertyMouseSensitive(HUD->GameSettings.MouseSensitive));
 
 
 	case EMenuSettingsFloatPropertyType::RadarDeep:
 
-		return new FMenuSettingsPropertyRadarDeep(HUD->GameSettings.RadarDeep);
+		return std::unique_ptr<FMenuSettingsPropertyBase<float, EMenuSettingsFloatPropertyType>>(new FMenuSettingsPropertyRadarDeep(HUD->GameSettings.RadarDeep));
 
 
 	default: throw;
