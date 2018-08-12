@@ -17,8 +17,6 @@
 #include "GameSettings.h"
 
 UMainMenuPluginHUDComponent::UMainMenuPluginHUDComponent() :
-	Buttons([this](EMainMenuPluginButtonType ButtonType) {return GetMenuButtonsFactory()->ButtonCreate(ButtonType, this); } , EMainMenuPluginButtonType::end),
-	MenuModes([this](EMainMenuMode ModeType) {return GetMenuModeFactory()->Create(ModeType, this); }, EMainMenuMode::end),
 	IntPropertys([this](EMenuSettingsIntPropertyType PropertyType) {return EMenuSettingsIntPropertyTypeCreateInt(PropertyType, this); }, EMenuSettingsIntPropertyType::end),
 	BoolPropertys([this](EMenuSettingsBoolPropertyType PropertyType) {return EMenuSettingsIntPropertyTypeCreateBool(PropertyType, this); }, EMenuSettingsBoolPropertyType::end),
 	FloatPropertys([this](EMenuSettingsFloatPropertyType PropertyType) {return EMenuSettingsIntPropertyTypeCreateFloat(PropertyType, this); }, EMenuSettingsFloatPropertyType::end),
@@ -27,6 +25,8 @@ UMainMenuPluginHUDComponent::UMainMenuPluginHUDComponent() :
 	bWantsInitializeComponent = true; 
 
 }
+
+UMainMenuPluginHUDComponent::~UMainMenuPluginHUDComponent() = default;
 
 
 void UMainMenuPluginHUDComponent::InitializeComponent()
@@ -43,6 +43,9 @@ void UMainMenuPluginHUDComponent::InitializeComponent()
 	{
 		UE_LOG(LogTemp, Error, TEXT("Not all Widgets in MainMenuComponent set"));
 	}
+
+	Buttons.CreateItems([this](EMainMenuPluginButtonType ButtonType) {return GetMenuButtonsFactory()->ButtonCreate(ButtonType, this); }, EMainMenuPluginButtonType::end);
+	MenuModes.CreateItems([this](EMainMenuMode ModeType) {return GetMenuModeFactory()->Create(ModeType, this); }, EMainMenuMode::end);
 
 	GameSettings.HUDComponent = this;
 	GameSettings.SetSetting();
@@ -97,7 +100,7 @@ std::shared_ptr<FMainMenuModeFactory> UMainMenuPluginHUDComponent::GetMenuModeFa
 {
 	if (!ModeFactory)
 	{
-		ModeFactory = std::shared_ptr<FMainMenuModeFactory>(new FMainMenuModeFactory());
+		ModeFactory = CreateMenuModeFactory();
 	}
 	return ModeFactory;
 }
@@ -106,9 +109,19 @@ std::shared_ptr<FMenuPluginFactoryButton> UMainMenuPluginHUDComponent::GetMenuBu
 {
 	if (!ButtonFactory)
 	{
-		ButtonFactory = std::shared_ptr<FMenuPluginFactoryButton>(new FMenuPluginFactoryButton());
+		ButtonFactory = CreateMenuButtonsFactory();
 	}
 	return ButtonFactory;
+}
+
+std::shared_ptr<FMainMenuModeFactory>  UMainMenuPluginHUDComponent::CreateMenuModeFactory()
+{
+	return std::shared_ptr<FMainMenuModeFactory>(new FMainMenuModeFactory());
+}
+
+std::shared_ptr<FMenuPluginFactoryButton>  UMainMenuPluginHUDComponent::CreateMenuButtonsFactory()
+{
+	return std::shared_ptr<FMenuPluginFactoryButton>(new FMenuPluginFactoryButton());
 }
 
 

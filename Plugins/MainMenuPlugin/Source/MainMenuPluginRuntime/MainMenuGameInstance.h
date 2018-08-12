@@ -15,7 +15,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = UI)
 		TSubclassOf<UUserWidget> LoadingScreenWidget;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = UI)
 
 		FString LogoMovie = FString ("UELogo");
 

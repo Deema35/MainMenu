@@ -113,7 +113,7 @@ public:
 
 	virtual EMainMenuPluginButtonType GetType() const override { return EMainMenuPluginButtonType::CheckPointMode; }
 
-	virtual void Click() override;
+	virtual void Click() override {};
 
 	virtual FText GetName() const { return LOCTEXT("ButtonCheckPointMode", "Checkpoint mode"); }
 

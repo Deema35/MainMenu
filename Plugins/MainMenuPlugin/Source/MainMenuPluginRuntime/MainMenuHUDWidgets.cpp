@@ -18,7 +18,7 @@ void UMainMenuRadarHUDWidget::NativeConstruct()
 
 	if (!ActorComponent)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Set ATFCPHUD"));
+		UE_LOG(LogTemp, Error, TEXT("Set MainMenuPluginHUDComponent"));
 	}
 	else
 	{
@@ -28,17 +28,22 @@ void UMainMenuRadarHUDWidget::NativeConstruct()
 
 
 
-void UMainMenuRadarHUDWidget::NativePaint(FPaintContext& InContext) const
-{
-	Super::NativePaint(InContext);
 
+
+int32 UMainMenuRadarHUDWidget::NativePaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect,
+	FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
+{
 	const std::vector<FVector*>& RadarTargets = HUDComponent->GetRadarTargets();
+
+	FPaintContext PaintContext(AllottedGeometry, MyCullingRect, OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
 
 	for (int i = 0; i < RadarTargets.size(); i++)
 	{
-		DrawRadarMark(InContext, MainQuestMarkColor, *RadarTargets[i]);
+		DrawRadarMark(PaintContext, MainQuestMarkColor, *RadarTargets[i]);
 	}
-	
+
+
+	return Super::NativePaint(Args, AllottedGeometry, MyCullingRect, OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
 }
 
 void UMainMenuRadarHUDWidget::DrawRadarMark(FPaintContext& InContext, FLinearColor MarkColor, FVector Target) const

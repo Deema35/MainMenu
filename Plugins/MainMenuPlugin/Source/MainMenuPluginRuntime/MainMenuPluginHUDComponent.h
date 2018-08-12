@@ -11,6 +11,7 @@
 #include "Input/Events.h"
 #include "MainMenuCore.h"
 #include "MenuSettingsProperty.h"
+#include "GameSettings.h"
 #include "MainMenuPluginHUDComponent.generated.h"
 
 class USoundClass;
@@ -42,6 +43,8 @@ class MAINMENUPLUGINRUNTIME_API UMainMenuPluginHUDComponent : public UActorCompo
 public:
 
 	UMainMenuPluginHUDComponent();
+
+	~UMainMenuPluginHUDComponent();
 
 	virtual void InitializeComponent() override;
 
@@ -126,17 +129,9 @@ public:
 
 public:
 
-	UPROPERTY(BlueprintReadWrite)
-		int32 SelectedRace = -1;
+	
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float TextScale = 2;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FLinearColor MarkColor = FLinearColor::Red;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float MarkLenght = 12;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USoundClass* SoundClass;
@@ -179,9 +174,14 @@ private:
 
 	void EliminatePauseText();
 
-	virtual std::shared_ptr<FMainMenuModeFactory> GetMenuModeFactory();
+	std::shared_ptr<FMainMenuModeFactory> GetMenuModeFactory();
 
-	virtual std::shared_ptr<FMenuPluginFactoryButton> GetMenuButtonsFactory();
+	std::shared_ptr<FMenuPluginFactoryButton> GetMenuButtonsFactory();
+
+	virtual std::shared_ptr<FMainMenuModeFactory> CreateMenuModeFactory();
+
+	virtual std::shared_ptr<FMenuPluginFactoryButton> CreateMenuButtonsFactory();
+
 
 	bool CheckWidgets();
 
@@ -204,6 +204,7 @@ private:
 	std::shared_ptr<FMenuPluginFactoryButton> ButtonFactory;
 
 	std::shared_ptr<FMainMenuModeFactory> ModeFactory;
+
 };
 
 
